@@ -132,3 +132,5 @@ def tampilkan_hampir_habis():
 
 
 print("update data")
+
+print("hello world")
