@@ -128,4 +128,23 @@ def menu_riwayat():
         "1. Tampilkan semua riwayat penjualan",
         "2. Lihat detail transaksi (by ID)",
         "3. Filter riwayat berdasarkan tanggal",
-        "4. Rekapitulasi & barang
+        "4. Rekapitulasi & barang terlaris",
+        "0. Kembali ke menu utama",
+    )
+
+    while True:
+        print("\n=== RIWAYAT & LAPORAN PENJUALAN ===")
+        for baris in opsi:
+            print(baris)
+        pilihan = input_pilihan_menu("Pilih menu: ", 0, 4)
+
+        if pilihan == 1:
+            tampil_semua_riwayat()
+        elif pilihan == 2:
+            detail_transaksi()
+        elif pilihan == 3:
+            filter_riwayat_tanggal()
+        elif pilihan == 4:
+            rekap_penjualan()
+        else:
+            break
