@@ -4,6 +4,7 @@ def valid_tidak_kosong(teks):
             return True
     return False
 
+
 def valid_format_id(id_barang):
     if len(id_barang) != 4:
         return False
@@ -14,20 +15,18 @@ def valid_format_id(id_barang):
             return False
     return True
 
+
 def valid_harga(harga):
-    if harga > 0:
-        return True
-    return False
+    return harga > 0
+
 
 def valid_stok(stok):
-    if stok >= 0:
-        return True
-    return False
+    return stok >= 0
+
 
 def valid_jumlah(jumlah):
-    if jumlah > 0:
-        return True
-    return False
+    return jumlah > 0
+
 
 def valid_id_unik(daftar_barang, id_barang):
     for barang in daftar_barang:
@@ -45,13 +44,14 @@ def input_teks(pesan):
             return teks
         print("Input tidak boleh kosong!")
 
+
 def input_bilangan_bulat(pesan):
     while True:
         try:
-            angka = int(input(pesan))
-            return angka
+            return int(input(pesan))
         except ValueError:
             print("Input harus berupa angka bulat!")
+
 
 def input_harga(pesan):
     while True:
@@ -60,12 +60,14 @@ def input_harga(pesan):
             return angka
         print("Harga harus lebih dari 0!")
 
+
 def input_stok(pesan):
     while True:
         angka = input_bilangan_bulat(pesan)
         if valid_stok(angka):
             return angka
         print("Stok tidak boleh negatif!")
+
 
 def input_jumlah(pesan):
     while True:
@@ -74,25 +76,28 @@ def input_jumlah(pesan):
             return angka
         print("Jumlah harus lebih dari 0!")
 
+
 def input_pilihan_menu(pesan, minimal, maksimal):
     while True:
         angka = input_bilangan_bulat(pesan)
-        if angka >= minimal and angka <= maksimal:
+        if minimal <= angka <= maksimal:
             return angka
-        print("Pilihan harus antara", minimal, "sampai", maksimal)
+        print(f"Pilihan harus antara {minimal} sampai {maksimal}.")
+
 
 def input_ya_tidak(pesan):
     while True:
-        jawaban = input(pesan + " (y/n): ")
-        if jawaban == "y" or jawaban == "Y":
+        jawaban = input(pesan + " (y/n): ").strip().lower()
+        if jawaban == "y":
             return True
-        if jawaban == "n" or jawaban == "N":
+        if jawaban == "n":
             return False
         print("Jawab dengan y atau n saja!")
 
+
 def input_id_baru(daftar_barang, pesan):
     while True:
-        id_barang = input(pesan)
+        id_barang = input(pesan).strip()
 
         if not valid_format_id(id_barang):
             print("Format ID salah! Contoh: B001 (huruf B kapital)")

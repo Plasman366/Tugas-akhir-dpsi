@@ -1,44 +1,44 @@
-[
+DATA_AWAL_BARANG = [
     {
-        "id": "BRG001",
+        "id": "B001",
         "nama": "Beras 5kg",
         "kategori": "Sembako",
         "harga": 68000,
-        "stok": 20
+        "stok": 20,
     },
     {
-        "id": "BRG002",
+        "id": "B002",
         "nama": "Minyak Goreng 1L",
         "kategori": "Sembako",
         "harga": 18000,
-        "stok": 4
+        "stok": 4,
     },
     {
-        "id": "BRG003",
+        "id": "B003",
         "nama": "Gula Pasir 1kg",
         "kategori": "Sembako",
         "harga": 17000,
-        "stok": 12
+        "stok": 12,
     },
     {
-        "id": "BRG004",
+        "id": "B004",
         "nama": "Indomie Goreng",
         "kategori": "Makanan",
         "harga": 3500,
-        "stok": 50
+        "stok": 50,
     },
     {
-        "id": "BRG005",
+        "id": "B005",
         "nama": "Teh Botol",
         "kategori": "Minuman",
         "harga": 5000,
-        "stok": 3
+        "stok": 3,
     },
     {
-        "id": "BRG006",
+        "id": "B006",
         "nama": "Sabun Mandi",
         "kategori": "Kebersihan",
         "harga": 4000,
-        "stok": 0
-    }
+        "stok": 0,
+    },
 ]

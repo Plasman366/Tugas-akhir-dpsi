@@ -1,71 +1,130 @@
-import json
+from storage import baca_barang, cari_barang_by_id, simpan_barang
+from validasi import input_jumlah, input_pilihan_menu, valid_format_id
 
-FILE_BARANG = "barang.json"
-FILE_TRANSAKSI = "transaksi.json"
-
-
-def baca_data(nama_file):
-    try:
-        file = open(nama_file, "r")
-        data = json.load(file)
-        file.close()
-        return data
-    except FileNotFoundError:
-        return []
-    except json.JSONDecodeError:
-        return []
+BATAS_MENIPIS = 5
 
 
-def simpan_data(nama_file, data):
-    try:
-        file = open(nama_file, "w")
-        json.dump(data, file, indent=4)
-        file.close()
-        return True
-    except IOError:
-        print("Data gagal disimpan ke file.")
+def minta_id():
+    while True:
+        id_barang = input("Masukkan ID barang (contoh B001, ketik 0 untuk batal): ").strip()
+        if id_barang == "0":
+            return None
+        if valid_format_id(id_barang):
+            return id_barang
+        print("Format ID salah! Contoh: B001 (huruf B kapital)")
+
+
+def ubah_stok(id_barang, jumlah):
+    daftar = baca_barang()
+    barang = cari_barang_by_id(daftar, id_barang)
+
+    if barang == {}:
+        return False
+    if barang["stok"] + jumlah < 0:
         return False
 
-def baca_barang():
-    return baca_data(FILE_BARANG)
+    barang["stok"] += jumlah
+    return simpan_barang(daftar)
 
-def simpan_barang(daftar_barang):
-    return simpan_data(FILE_BARANG, daftar_barang)
 
-def baca_transaksi():
-    return baca_data(FILE_TRANSAKSI)
+def tampil_stok():
+    daftar = baca_barang()
 
-def simpan_transaksi(daftar_transaksi):
-    return simpan_data(FILE_TRANSAKSI, daftar_transaksi)
+    if len(daftar) == 0:
+        print("Belum ada data barang.")
+        return
 
-def cari_barang_by_id(daftar_barang, id_barang):
-    for barang in daftar_barang:
-        if barang["id"] == id_barang:
-            return barang
-    return {}
+    print("\nDAFTAR STOK BARANG")
+    print("=" * 50)
+    for x in daftar:
+        ket = " (HAMPIR HABIS)" if x["stok"] <= BATAS_MENIPIS else ""
+        print(f"{x['id']} | {x['nama']} | {x['kategori']} | stok: {x['stok']}{ket}")
 
-def id_sudah_ada(daftar_barang, id_barang):
-    for barang in daftar_barang:
-        if barang["id"] == id_barang:
-            return True
-    return False
 
-def buat_id_baru(daftar_barang):
-    terbesar = 0
+def tampil_stok_menipis():
+    daftar = baca_barang()
+    menipis = [x for x in daftar if x["stok"] <= BATAS_MENIPIS]
 
-    for barang in daftar_barang:
-        id_barang = barang["id"]
-        try:
-            nomor = int(id_barang[1:])
-            if nomor > terbesar:
-                terbesar = nomor
-        except ValueError:
-            pass
+    if len(menipis) == 0:
+        print("Tidak ada barang yang hampir habis.")
+        return
 
-    nomor_baru = terbesar + 1
+    print(f"\n=== BARANG HAMPIR HABIS (stok <= {BATAS_MENIPIS}) ===")
+    for x in menipis:
+        print(f"- {x['id']} | {x['nama']} | sisa {x['stok']}")
 
-    teks = str(nomor_baru)
-    while len(teks) < 3:
-        teks = "0" + teks
+    kategori_terdampak = {x["kategori"] for x in menipis}
+    print("Kategori yang terdampak:")
+    for kategori in sorted(kategori_terdampak):
+        print("-", kategori)
 
-    return "B" + teks
+
+def tambah_stok():
+    id_barang = minta_id()
+    if id_barang is None:
+        print("Dibatalkan.")
+        return
+
+    barang = cari_barang_by_id(baca_barang(), id_barang)
+    if barang == {}:
+        print("Barang dengan ID tersebut tidak ditemukan.")
+        return
+
+    print(f"Barang: {barang['nama']} (stok saat ini: {barang['stok']})")
+    jumlah = input_jumlah("Jumlah stok yang ditambahkan: ")
+
+    if ubah_stok(id_barang, jumlah):
+        print(f"Berhasil! Stok {barang['nama']} sekarang: {barang['stok'] + jumlah}")
+    else:
+        print("Gagal menambah stok.")
+
+
+def kurangi_stok():
+    id_barang = minta_id()
+    if id_barang is None:
+        print("Dibatalkan.")
+        return
+
+    barang = cari_barang_by_id(baca_barang(), id_barang)
+    if barang == {}:
+        print("Barang dengan ID tersebut tidak ditemukan.")
+        return
+
+    print(f"Barang: {barang['nama']} (stok saat ini: {barang['stok']})")
+    jumlah = input_jumlah("Jumlah stok yang dikurangi: ")
+
+    if jumlah > barang["stok"]:
+        print("Gagal! Jumlah pengurangan melebihi stok yang ada.")
+        return
+
+    if ubah_stok(id_barang, -jumlah):
+        print(f"Berhasil! Stok {barang['nama']} sekarang: {barang['stok'] - jumlah}")
+    else:
+        print("Gagal mengurangi stok.")
+
+
+def menu_stok():
+    opsi = (
+        "1. Tampilkan stok semua barang",
+        "2. Tambah stok",
+        "3. Kurangi stok",
+        "4. Tampilkan barang hampir habis",
+        "0. Kembali ke menu utama",
+    )
+
+    while True:
+        print("\n=== MANAJEMEN STOK ===")
+        for baris in opsi:
+            print(baris)
+        pilihan = input_pilihan_menu("Pilih menu: ", 0, 4)
+
+        if pilihan == 1:
+            tampil_stok()
+        elif pilihan == 2:
+            tambah_stok()
+        elif pilihan == 3:
+            kurangi_stok()
+        elif pilihan == 4:
+            tampil_stok_menipis()
+        else:
+            break
