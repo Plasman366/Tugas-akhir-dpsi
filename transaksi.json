@@ -1,0 +1,18 @@
+[
+    {
+        "id": "TRX001",
+        "tanggal": "2026-11-23 19:47:42",
+        "items": [
+            {
+                "id": "B001",
+                "nama": "Beras 5kg",
+                "jumlah": 1,
+                "harga": 68000,
+                "total": 68000
+            }
+        ],
+        "total": 68000,
+        "bayar": 68000,
+        "kembalian": 0
+    }
+]

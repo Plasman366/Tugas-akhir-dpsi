@@ -1,3 +1,4 @@
+#Data barang yang tersedia di toko
 DATA_AWAL_BARANG = [
     {
         "id": "B001",

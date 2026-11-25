@@ -1,0 +1,44 @@
+[
+    {
+        "id": "B001",
+        "nama": "Beras 5kg",
+        "kategori": "Sembako",
+        "harga": 68000,
+        "stok": 19
+    },
+    {
+        "id": "B002",
+        "nama": "Minyak Goreng 1L",
+        "kategori": "Sembako",
+        "harga": 18000,
+        "stok": 4
+    },
+    {
+        "id": "B003",
+        "nama": "Gula Pasir 1kg",
+        "kategori": "Sembako",
+        "harga": 17000,
+        "stok": 12
+    },
+    {
+        "id": "B004",
+        "nama": "Indomie Goreng",
+        "kategori": "Makanan",
+        "harga": 3500,
+        "stok": 50
+    },
+    {
+        "id": "B005",
+        "nama": "Teh Botol",
+        "kategori": "Minuman",
+        "harga": 5000,
+        "stok": 8
+    },
+    {
+        "id": "B006",
+        "nama": "Sabun Mandi",
+        "kategori": "Kebersihan",
+        "harga": 4000,
+        "stok": 0
+    }
+]
