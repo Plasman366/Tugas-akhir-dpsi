@@ -35,7 +35,6 @@ def valid_id_unik(daftar_barang, id_barang):
     return True
 
 
-# ---------- Fungsi input ----------
 
 def input_teks(pesan):
     while True:

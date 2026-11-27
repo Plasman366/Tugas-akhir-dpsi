@@ -11,7 +11,7 @@
         "nama": "Minyak Goreng 1L",
         "kategori": "Sembako",
         "harga": 18000,
-        "stok": 4
+        "stok": 6
     },
     {
         "id": "B003",
@@ -25,14 +25,14 @@
         "nama": "Indomie Goreng",
         "kategori": "Makanan",
         "harga": 3500,
-        "stok": 50
+        "stok": 45
     },
     {
         "id": "B005",
         "nama": "Teh Botol",
         "kategori": "Minuman",
         "harga": 5000,
-        "stok": 8
+        "stok": 7
     },
     {
         "id": "B006",

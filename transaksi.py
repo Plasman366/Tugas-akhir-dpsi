@@ -17,7 +17,7 @@ def cari_di_keranjang(keranjang, id_barang):
     for item in keranjang:
         if item["id"] == id_barang:
             return item
-    return {}          # {} berarti barang belum ada di keranjang
+    return {}          
 
 
 def cetak_struk(data_transaksi):
@@ -37,7 +37,7 @@ def cetak_struk(data_transaksi):
     print("   TERIMA KASIH TELAH BERBELANJA    ")
 
 
-# Tahap 1: mengisi keranjang belanja
+
 def isi_keranjang(daftar_barang):
     keranjang = []
 
@@ -56,7 +56,7 @@ def isi_keranjang(daftar_barang):
             print("Stok barang habis. Silakan pilih barang lain.")
             continue
 
-        # hitung sisa stok = stok barang - jumlah yang sudah ada di keranjang
+        
         item = cari_di_keranjang(keranjang, id_barang)
         sudah_di_keranjang = 0
         if item != {}:
@@ -92,7 +92,7 @@ def isi_keranjang(daftar_barang):
     return keranjang
 
 
-# Tahap 2: meminta uang pembayaran sampai cukup
+
 def minta_pembayaran(total_belanja):
     while True:
         uang_bayar = input_jumlah("Masukkan jumlah uang yang dibayarkan: Rp")
@@ -109,13 +109,13 @@ def proses_transaksi():
         print("Belum ada data barang. Silakan isi data barang terlebih dahulu.")
         return
 
-    # 1. isi keranjang
+
     keranjang = isi_keranjang(daftar_barang)
     if len(keranjang) == 0:
         print("Transaksi dibatalkan karena tidak ada barang di keranjang.")
         return
 
-    # 2. hitung total dan pembayaran
+    
     total_belanja = 0
     for item in keranjang:
         total_belanja += item["total"]
@@ -128,13 +128,13 @@ def proses_transaksi():
     uang_bayar = minta_pembayaran(total_belanja)
     kembalian = uang_bayar - total_belanja
 
-    # 3. kurangi stok otomatis (memakai ubah_stok dari stok.py)
+    
     for item in keranjang:
         berhasil_kurang = ubah_stok(item["id"], -item["jumlah"])
         if not berhasil_kurang:
             print("Peringatan: gagal memperbarui stok untuk", item["nama"])
 
-    # 4. simpan riwayat transaksi ke transaksi.json
+    
     daftar_transaksi = baca_transaksi()
     data_transaksi_baru = {
         "id": buat_id_transaksi(daftar_transaksi),
@@ -148,11 +148,11 @@ def proses_transaksi():
     if not simpan_transaksi(daftar_transaksi):
         print("Peringatan: riwayat transaksi gagal disimpan ke file.")
 
-    # 5. cetak struk
+    
     cetak_struk(data_transaksi_baru)
 
 
-# menu pembungkus supaya konsisten dengan menu_stok()
+
 def menu_transaksi():
     while True:
         print("=== MENU TRANSAKSI PENJUALAN ===")

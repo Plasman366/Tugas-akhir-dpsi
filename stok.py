@@ -18,14 +18,15 @@ def minta_id():
 def ubah_stok(id_barang, jumlah):
     daftar = baca_barang()
     barang = cari_barang_by_id(daftar, id_barang)
-
-    if barang == {}:                     # {} berarti barang tidak ditemukan
+    if barang == {}:                     
         return False
-    if barang["stok"] + jumlah < 0:      # aturan: stok tidak boleh negatif
+
+        return False
+    if barang["stok"] + jumlah < 0:      
         return False
 
     barang["stok"] += jumlah
-    return simpan_barang(daftar)         # True kalau berhasil tersimpan ke file
+    return simpan_barang(daftar)        
 
 
 def tampil_stok():
